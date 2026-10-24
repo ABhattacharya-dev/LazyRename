@@ -1,10 +1,10 @@
-# LazyRename: I let a local model read my messy files before naming them
+# I Used Too Much AI, So Now It Names My Files
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)*
 
 ## What I Built
 
-The sample folder starts with `document_001.txt`, `notes_final_v3.md`, and `scan0004.pdf`. Those names tell me almost nothing about the contents. To improve a whole folder by hand, I would have to open each file, figure out what it is, and check that the new name will not collide with something already there. That is the sort of chore I put off.
+I may have used AI too much: now I'm asking it what to call `scan0004.pdf`. The sample folder also has `document_001.txt` and `notes_final_v3.md`. Those names tell me almost nothing about the contents. To improve a whole folder by hand, I would have to open each file, figure out what it is, and check that the new name will not collide with something already there. That is the sort of chore I put off.
 
 LazyRename does the reading. It scans a local folder for PDF, TXT, MD, and PY files, then asks an installed Ollama model for a short filename based on each file's contents. I get a table with the old and suggested names, and I can edit or deselect any row. The rename button stays unavailable until I check a confirmation box.
 
