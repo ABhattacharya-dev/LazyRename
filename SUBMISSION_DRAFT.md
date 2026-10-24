@@ -4,7 +4,7 @@
 
 ## What I Built
 
-I keep ending up with files named `document_001.txt`, `notes_final_v3.md`, and `scan0004.pdf`. Renaming one is easy. Renaming a whole folder means opening each file, figuring out what it is, and checking that the new name will not collide with something already there. I tend to put it off.
+The sample folder starts with `document_001.txt`, `notes_final_v3.md`, and `scan0004.pdf`. Those names tell me almost nothing about the contents. To improve a whole folder by hand, I would have to open each file, figure out what it is, and check that the new name will not collide with something already there. That is the sort of chore I put off.
 
 LazyRename does the reading. It scans a local folder for PDF, TXT, MD, and PY files, then asks an installed Ollama model for a short filename based on each file's contents. I get a table with the old and suggested names, and I can edit or deselect any row. The rename button stays unavailable until I check a confirmation box.
 
@@ -14,7 +14,7 @@ It keeps each file in its original folder and preserves its extension. It also c
 
 **Video:** [Add the 60-second screen recording before publishing. The shot list is in `DEMO.md` in the repository.]
 
-Here is one result from a local test using `qwen3.5:4b` and the included sample files:
+With `qwen3.5:4b`, one of the included samples was renamed like this:
 
 | Before | Suggested name |
 | --- | --- |
@@ -30,9 +30,11 @@ This is a local desktop workflow, so there is no hosted app link. To try it, cop
 
 ## How I Built It
 
-The app uses Python 3.11+, Streamlit for the review screen, PyMuPDF for PDF text extraction, and Ollama's local API for suggestions. The user can pick from models already installed in Ollama. In my test I used `qwen3.5:4b`; the setup guide also shows how to install `gemma3:4b`.
+The app uses Python 3.11+, Streamlit for the review screen, PyMuPDF for PDF text extraction, and Ollama's local API for suggestions. The user can pick from models already installed in Ollama. The local demo used `qwen3.5:4b`; the setup guide also shows how to install `gemma3:4b`.
 
 The model gets a bounded excerpt of the file's contents, with no original filename in the prompt. LazyRename reads up to three PDF pages or 64 KB of a text file and sends no more than 4,500 characters to Ollama. It skips empty files, encrypted PDFs, binary files, and files over 25 MB. Those limits keep a stray large file from turning a quick folder cleanup into a huge inference job.
+
+Each model request handles one file. I later found [a report of a small model mixing up names across a batch](https://dev.to/sank8/my-1b-model-renamed-one-file-to-another-files-name-the-fix-was-a-provenance-guard-3ekm), which reinforced that choice and the need for a preview.
 
 After inference, Python sanitizes the proposed name and keeps the original extension. Before applying a batch, it checks for collisions and verifies that the source files have not changed since the preview. The transaction log records the moves so Undo can check the paths again before restoring them. If the original name is occupied or a renamed file has changed, Undo stops instead of overwriting it.
 
@@ -51,5 +53,3 @@ I used an AI coding assistant while building and testing LazyRename. I have not 
 ## The Lazy Payoff
 
 LazyRename displays a potential saving of 30 seconds per selected file. In the four-file sample run, that showed **two minutes**. It is an assumption for illustrating the manual work, not a measured speedup. I have not timed the full process against hand-renaming a real folder, including model loading and reviewing suggestions.
-
-The practical payoff I have verified is simpler: the app read four sample files, offered content-based names, applied the confirmed changes, and restored them with Undo. I can leave the final choice to myself without doing the first reading and naming pass by hand.
