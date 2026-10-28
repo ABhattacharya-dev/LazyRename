@@ -1,6 +1,6 @@
 # LazyRename 🦥
 
-LazyRename reads a small sample of each local PDF, TXT, Markdown, or Python file and asks an installed Ollama model for a meaningful filename. You review and edit every suggestion before anything moves. The app never uses a paid API, uploads content to a cloud service, or executes a scanned file.
+LazyRename reads a sample of each local PDF, TXT, Markdown, or Python file and asks an installed Ollama model for a meaningful filename. You review and edit every suggestion before anything moves. The app never uses a paid API, uploads content to a cloud service, or executes a scanned file.
 
 Built for the [Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19).
 
